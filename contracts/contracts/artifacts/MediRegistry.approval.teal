@@ -1,0 +1,122 @@
+#pragma version 11
+#pragma typetrack false
+
+// algopy.arc4.ARC4Contract.approval_program() -> uint64:
+main:
+    intcblock 0 2
+    // contracts/MediRegistry.py:3
+    // class MediRegistry(ARC4Contract):
+    txn NumAppArgs
+    bz main___algopy_default_create@5
+    pushbytes 0xc7a44ed6 // method "mint_medicine_batch(string,string)uint64"
+    txna ApplicationArgs 0
+    match main_mint_medicine_batch_route@3
+    err
+
+main_mint_medicine_batch_route@3:
+    // contracts/MediRegistry.py:4
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    txn ApplicationID
+    &&
+    assert
+    b mint_medicine_batch
+
+main___algopy_default_create@5:
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    return
+
+
+// MediRegistry.MediRegistry.mint_medicine_batch[routing]() -> void:
+mint_medicine_batch:
+    // contracts/MediRegistry.py:4
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 2
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // contracts/MediRegistry.py:6-14
+    // mint_tx = itxn.AssetConfig(
+    //     asset_name=batch_name,
+    //     unit_name=String("MED"),
+    //     url=ipfs_metadata_url,
+    //     total=100,
+    //     decimals=0,
+    //     manager=Global.current_application_address,
+    //     freeze=Global.current_application_address,
+    // ).submit()
+    itxn_begin
+    // contracts/MediRegistry.py:12
+    // manager=Global.current_application_address,
+    global CurrentApplicationAddress
+    // contracts/MediRegistry.py:13
+    // freeze=Global.current_application_address,
+    dup
+    itxn_field ConfigAssetFreeze
+    itxn_field ConfigAssetManager
+    // contracts/MediRegistry.py:11
+    // decimals=0,
+    intc_0 // 0
+    itxn_field ConfigAssetDecimals
+    // contracts/MediRegistry.py:10
+    // total=100,
+    pushint 100
+    itxn_field ConfigAssetTotal
+    itxn_field ConfigAssetURL
+    // contracts/MediRegistry.py:8
+    // unit_name=String("MED"),
+    pushbytes "MED"
+    itxn_field ConfigAssetUnitName
+    itxn_field ConfigAssetName
+    // contracts/MediRegistry.py:6
+    // mint_tx = itxn.AssetConfig(
+    pushint 3 // acfg
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // contracts/MediRegistry.py:6-14
+    // mint_tx = itxn.AssetConfig(
+    //     asset_name=batch_name,
+    //     unit_name=String("MED"),
+    //     url=ipfs_metadata_url,
+    //     total=100,
+    //     decimals=0,
+    //     manager=Global.current_application_address,
+    //     freeze=Global.current_application_address,
+    // ).submit()
+    itxn_submit
+    itxn CreatedAssetID
+    // contracts/MediRegistry.py:15
+    // return arc4.UInt64(mint_tx.created_asset.id)
+    itob
+    // contracts/MediRegistry.py:4
+    // @arc4.abimethod
+    pushbytes 0x151f7c75
+    swap
+    concat
+    log
+    pushint 1
+    return

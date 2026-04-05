@@ -1,0 +1,92 @@
+#pragma version 11
+#pragma typetrack false
+
+// algopy.arc4.ARC4Contract.approval_program() -> uint64:
+main:
+    intcblock 1 0
+    // contracts/ProcurementEscrow.py:3
+    // class ProcurementEscrow(ARC4Contract):
+    txn NumAppArgs
+    bz main___algopy_default_create@5
+    pushbytes 0x235e036d // method "release_payment(address,uint64,bool)string"
+    txna ApplicationArgs 0
+    match main_release_payment_route@3
+    err
+
+main_release_payment_route@3:
+    // contracts/ProcurementEscrow.py:4
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    txn ApplicationID
+    &&
+    assert
+    b release_payment
+
+main___algopy_default_create@5:
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    return
+
+
+// ProcurementEscrow.ProcurementEscrow.release_payment[routing]() -> void:
+release_payment:
+    // contracts/ProcurementEscrow.py:4
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    pushint 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    txna ApplicationArgs 2
+    dup
+    len
+    pushint 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 3
+    dup
+    len
+    intc_0 // 1
+    ==
+    assert // invalid number of bytes for arc4.bool
+    intc_1 // 0
+    getbit
+    // contracts/ProcurementEscrow.py:6
+    // assert qr_is_genuine, "Payment Locked: QR scan failed or unverified!"
+    assert // Payment Locked: QR scan failed or unverified!
+    // contracts/ProcurementEscrow.py:7-11
+    // itxn.Payment(
+    //     receiver=supplier,
+    //     amount=amount,
+    //     fee=0
+    // ).submit()
+    itxn_begin
+    itxn_field Amount
+    itxn_field Receiver
+    // contracts/ProcurementEscrow.py:7
+    // itxn.Payment(
+    intc_0 // pay
+    itxn_field TypeEnum
+    // contracts/ProcurementEscrow.py:10
+    // fee=0
+    intc_1 // 0
+    itxn_field Fee
+    // contracts/ProcurementEscrow.py:7-11
+    // itxn.Payment(
+    //     receiver=supplier,
+    //     amount=amount,
+    //     fee=0
+    // ).submit()
+    itxn_submit
+    // contracts/ProcurementEscrow.py:4
+    // @arc4.abimethod
+    pushbytes 0x151f7c750036537563636573733a2042617463682076657269666965642e205061796d656e742072656c656173656420746f20737570706c6965722e
+    log
+    intc_0 // 1
+    return

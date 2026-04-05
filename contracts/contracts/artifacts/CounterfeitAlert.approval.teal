@@ -1,0 +1,136 @@
+#pragma version 11
+#pragma typetrack false
+
+// algopy.arc4.ARC4Contract.approval_program() -> uint64:
+main:
+    intcblock 0 2 1
+    // contracts/CounterfeitAlert.py:3
+    // class CounterfeitAlert(ARC4Contract):
+    txn NumAppArgs
+    bz main___algopy_default_create@5
+    pushbytes 0x6b58fa78 // method "verify_and_freeze(uint64,address,byte[],byte[])string"
+    txna ApplicationArgs 0
+    match main_verify_and_freeze_route@3
+    err
+
+main_verify_and_freeze_route@3:
+    // contracts/CounterfeitAlert.py:4
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    txn ApplicationID
+    &&
+    assert
+    b verify_and_freeze
+
+main___algopy_default_create@5:
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    return
+
+
+// CounterfeitAlert.CounterfeitAlert.verify_and_freeze[routing]() -> void:
+verify_and_freeze:
+    // contracts/CounterfeitAlert.py:4
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    pushint 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 2
+    dup
+    len
+    pushint 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    txna ApplicationArgs 3
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 4
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // contracts/CounterfeitAlert.py:6
+    // if scanned_hash != true_hash:
+    !=
+    bz verify_and_freeze_after_if_else@4
+    // contracts/CounterfeitAlert.py:7-11
+    // itxn.AssetFreeze(
+    //     freeze_asset=med_asset,
+    //     freeze_account=holder,
+    //     frozen=True
+    // ).submit()
+    itxn_begin
+    // contracts/CounterfeitAlert.py:10
+    // frozen=True
+    intc_2 // 1
+    itxn_field FreezeAssetFrozen
+    dup
+    itxn_field FreezeAssetAccount
+    dig 1
+    itxn_field FreezeAsset
+    // contracts/CounterfeitAlert.py:7
+    // itxn.AssetFreeze(
+    pushint 5 // afrz
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // contracts/CounterfeitAlert.py:7-11
+    // itxn.AssetFreeze(
+    //     freeze_asset=med_asset,
+    //     freeze_account=holder,
+    //     frozen=True
+    // ).submit()
+    itxn_submit
+    // contracts/CounterfeitAlert.py:12
+    // log("ALERT: Counterfeit detected! Asset frozen.")
+    pushbytes "ALERT: Counterfeit detected! Asset frozen."
+    log
+    // contracts/CounterfeitAlert.py:13
+    // return String("COUNTERFEIT_DETECTED")
+    pushbytes "COUNTERFEIT_DETECTED"
+
+verify_and_freeze_after_inlined_CounterfeitAlert.CounterfeitAlert.verify_and_freeze@5:
+    // contracts/CounterfeitAlert.py:4
+    // @arc4.abimethod
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    pushbytes 0x151f7c75
+    swap
+    concat
+    log
+    intc_2 // 1
+    return
+
+verify_and_freeze_after_if_else@4:
+    // contracts/CounterfeitAlert.py:14
+    // return String("BATCH_GENUINE")
+    pushbytes "BATCH_GENUINE"
+    // contracts/CounterfeitAlert.py:4
+    // @arc4.abimethod
+    b verify_and_freeze_after_inlined_CounterfeitAlert.CounterfeitAlert.verify_and_freeze@5
