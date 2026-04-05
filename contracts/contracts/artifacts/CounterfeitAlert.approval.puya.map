@@ -3,7 +3,7 @@
   "sources": [
     "../../CounterfeitAlert.py"
   ],
-  "mappings": ";;;;;;AAEA;;AAAA;;;AAAA;;;;;;AAAA;;;AAAA;;;;AAAA;AACK;;AAAA;AAAA;;AAAA;AAAA;AAAA;;;;;;;;;;;AAAA;;;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAEM;AAAX;;;AACY;AAGW;;;;;;;;;;AAHX;;;;AAAA;;;AAAA;AAKI;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAJ;AACO;;;;;;;;;;;;;;;;;;;;;;AATd;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAUU;;;;;;;;;;;;;;;AAVV",
+  "mappings": ";;;;;;AACA;;AAAA;;;AAAA;;;;;;AAAA;;;AAAA;;;;AAAA;AACK;;AAAA;AAAA;;AAAA;AAAA;AAAA;;;;;;;;;;;AAAA;;;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAEM;AAAX;;;AACY;AAGW;;;;;;;;;;AAHX;;;;AAAA;;;AAAA;AAKI;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAJ;AACO;;;;;;;;;;;;;;;;;;;;;;AATd;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAUU;;;;;;;;;;;;;;;AAVV",
   "op_pc_offset": 0,
   "pc_events": {
     "1": {
@@ -718,26 +718,26 @@
       "op": "itxn_submit"
     },
     "117": {
-      "op": "pushbytes \"ALERT: Counterfeit detected! Asset frozen.\"",
+      "op": "pushbytes \"ALERT: Counterfeit detected!\"",
       "defined_out": [
-        "\"ALERT: Counterfeit detected! Asset frozen.\"",
+        "\"ALERT: Counterfeit detected!\"",
         "holder#0",
         "med_asset#0"
       ],
       "stack_out": [
         "med_asset#0",
         "holder#0",
-        "\"ALERT: Counterfeit detected! Asset frozen.\""
+        "\"ALERT: Counterfeit detected!\""
       ]
     },
-    "161": {
+    "147": {
       "op": "log",
       "stack_out": [
         "med_asset#0",
         "holder#0"
       ]
     },
-    "162": {
+    "148": {
       "op": "pushbytes \"COUNTERFEIT_DETECTED\"",
       "defined_out": [
         "holder#0",
@@ -750,7 +750,7 @@
         "tmp%8#0"
       ]
     },
-    "184": {
+    "170": {
       "block": "verify_and_freeze_after_inlined_CounterfeitAlert.CounterfeitAlert.verify_and_freeze@5",
       "stack_in": [
         "med_asset#0",
@@ -769,7 +769,7 @@
         "tmp%8#0 (copy)"
       ]
     },
-    "185": {
+    "171": {
       "op": "len",
       "defined_out": [
         "aggregate%length%0#0",
@@ -782,7 +782,7 @@
         "aggregate%length%0#0"
       ]
     },
-    "186": {
+    "172": {
       "op": "itob",
       "defined_out": [
         "aggregate%as_bytes%0#0",
@@ -795,7 +795,7 @@
         "aggregate%as_bytes%0#0"
       ]
     },
-    "187": {
+    "173": {
       "op": "extract 6 2",
       "defined_out": [
         "aggregate%length_uint16%0#0",
@@ -808,7 +808,7 @@
         "aggregate%length_uint16%0#0"
       ]
     },
-    "190": {
+    "176": {
       "op": "swap",
       "stack_out": [
         "med_asset#0",
@@ -817,7 +817,7 @@
         "tmp%8#0"
       ]
     },
-    "191": {
+    "177": {
       "op": "concat",
       "defined_out": [
         "aggregate%encoded_value%0#0"
@@ -828,7 +828,7 @@
         "aggregate%encoded_value%0#0"
       ]
     },
-    "192": {
+    "178": {
       "op": "pushbytes 0x151f7c75",
       "defined_out": [
         "0x151f7c75",
@@ -841,7 +841,7 @@
         "0x151f7c75"
       ]
     },
-    "198": {
+    "184": {
       "op": "swap",
       "stack_out": [
         "med_asset#0",
@@ -850,7 +850,7 @@
         "aggregate%encoded_value%0#0"
       ]
     },
-    "199": {
+    "185": {
       "op": "concat",
       "defined_out": [
         "tmp%10#0"
@@ -861,14 +861,14 @@
         "tmp%10#0"
       ]
     },
-    "200": {
+    "186": {
       "op": "log",
       "stack_out": [
         "med_asset#0",
         "holder#0"
       ]
     },
-    "201": {
+    "187": {
       "op": "intc_2 // 1",
       "defined_out": [
         "1"
@@ -879,14 +879,14 @@
         "1"
       ]
     },
-    "202": {
+    "188": {
       "op": "return",
       "stack_out": [
         "med_asset#0",
         "holder#0"
       ]
     },
-    "203": {
+    "189": {
       "block": "verify_and_freeze_after_if_else@4",
       "stack_in": [
         "med_asset#0",
@@ -902,7 +902,7 @@
         "tmp%8#0"
       ]
     },
-    "218": {
+    "204": {
       "op": "b verify_and_freeze_after_inlined_CounterfeitAlert.CounterfeitAlert.verify_and_freeze@5"
     }
   }

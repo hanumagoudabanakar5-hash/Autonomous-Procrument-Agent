@@ -4,7 +4,7 @@
 // algopy.arc4.ARC4Contract.approval_program() -> uint64:
 main:
     intcblock 0 2 1
-    // contracts/CounterfeitAlert.py:3
+    // contracts/CounterfeitAlert.py:2
     // class CounterfeitAlert(ARC4Contract):
     txn NumAppArgs
     bz main___algopy_default_create@5
@@ -14,7 +14,7 @@ main:
     err
 
 main_verify_and_freeze_route@3:
-    // contracts/CounterfeitAlert.py:4
+    // contracts/CounterfeitAlert.py:3
     // @arc4.abimethod
     txn OnCompletion
     !
@@ -34,7 +34,7 @@ main___algopy_default_create@5:
 
 // CounterfeitAlert.CounterfeitAlert.verify_and_freeze[routing]() -> void:
 verify_and_freeze:
-    // contracts/CounterfeitAlert.py:4
+    // contracts/CounterfeitAlert.py:3
     // @arc4.abimethod
     txna ApplicationArgs 1
     dup
@@ -71,18 +71,18 @@ verify_and_freeze:
     ==
     assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
     extract 2 0
-    // contracts/CounterfeitAlert.py:6
+    // contracts/CounterfeitAlert.py:5
     // if scanned_hash != true_hash:
     !=
     bz verify_and_freeze_after_if_else@4
-    // contracts/CounterfeitAlert.py:7-11
+    // contracts/CounterfeitAlert.py:6-10
     // itxn.AssetFreeze(
     //     freeze_asset=med_asset,
     //     freeze_account=holder,
     //     frozen=True
     // ).submit()
     itxn_begin
-    // contracts/CounterfeitAlert.py:10
+    // contracts/CounterfeitAlert.py:9
     // frozen=True
     intc_2 // 1
     itxn_field FreezeAssetFrozen
@@ -90,29 +90,29 @@ verify_and_freeze:
     itxn_field FreezeAssetAccount
     dig 1
     itxn_field FreezeAsset
-    // contracts/CounterfeitAlert.py:7
+    // contracts/CounterfeitAlert.py:6
     // itxn.AssetFreeze(
     pushint 5 // afrz
     itxn_field TypeEnum
     intc_0 // 0
     itxn_field Fee
-    // contracts/CounterfeitAlert.py:7-11
+    // contracts/CounterfeitAlert.py:6-10
     // itxn.AssetFreeze(
     //     freeze_asset=med_asset,
     //     freeze_account=holder,
     //     frozen=True
     // ).submit()
     itxn_submit
-    // contracts/CounterfeitAlert.py:12
-    // log("ALERT: Counterfeit detected! Asset frozen.")
-    pushbytes "ALERT: Counterfeit detected! Asset frozen."
+    // contracts/CounterfeitAlert.py:11
+    // log("ALERT: Counterfeit detected!")
+    pushbytes "ALERT: Counterfeit detected!"
     log
-    // contracts/CounterfeitAlert.py:13
+    // contracts/CounterfeitAlert.py:12
     // return String("COUNTERFEIT_DETECTED")
     pushbytes "COUNTERFEIT_DETECTED"
 
 verify_and_freeze_after_inlined_CounterfeitAlert.CounterfeitAlert.verify_and_freeze@5:
-    // contracts/CounterfeitAlert.py:4
+    // contracts/CounterfeitAlert.py:3
     // @arc4.abimethod
     dup
     len
@@ -128,9 +128,9 @@ verify_and_freeze_after_inlined_CounterfeitAlert.CounterfeitAlert.verify_and_fre
     return
 
 verify_and_freeze_after_if_else@4:
-    // contracts/CounterfeitAlert.py:14
+    // contracts/CounterfeitAlert.py:13
     // return String("BATCH_GENUINE")
     pushbytes "BATCH_GENUINE"
-    // contracts/CounterfeitAlert.py:4
+    // contracts/CounterfeitAlert.py:3
     // @arc4.abimethod
     b verify_and_freeze_after_inlined_CounterfeitAlert.CounterfeitAlert.verify_and_freeze@5

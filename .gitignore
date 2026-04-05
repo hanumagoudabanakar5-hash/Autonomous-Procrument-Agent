@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+artifacts/
+contracts/artifacts/
+node_modules/
+venv/
+.DS_Store
